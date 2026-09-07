@@ -14,6 +14,8 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { BlogPost } from "@/app/types";
 import Link from "next/link";
 import HeroSection from "./components/HeroSection";
+import PostActions from "./components/PostActions";
+import ArticleContent from "./components/ArticleContent";
 
 interface PostPageProps {
   params: Promise<{
@@ -220,139 +222,12 @@ const PostPage = async ({ params }: PostPageProps) => {
             {/* =====================================
                 Actions
             ===================================== */}
-            <Box
-              sx={{
-                mb: 3,
-                px: {
-                  xs: 1.5,
-                  sm: 2,
-                },
-                py: 1.5,
-                borderRadius: 2,
-                border: 1,
-                borderColor: "secondary.100",
-                backgroundColor: "background.paper",
-              }}
-            >
-              <Stack
-                direction="row"
-                sx={{
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                {/* Like */}
-                <Button
-                  disableRipple
-                  startIcon={<FavoriteBorderIcon />}
-                  sx={{
-                    minWidth: 88,
-                    height: 46,
-                    borderRadius: 2,
-                    color: "primary.400",
-                    backgroundColor: "primary.50",
-                    border: 1,
-                    borderColor: "primary.100",
-
-                    "&:hover": {
-                      backgroundColor: "primary.100",
-                    },
-                  }}
-                >
-                  {post.likesCount}
-                </Button>
-
-                {/* Bookmark */}
-                <Button
-                  disableRipple
-                  startIcon={<BookmarkBorderIcon />}
-                  sx={{
-                    height: 46,
-                    px: 2,
-                    borderRadius: 2,
-                    color: "text.secondary",
-                    backgroundColor: "background.paper",
-                    border: 1,
-                    borderColor: "secondary.100",
-
-                    "&:hover": {
-                      backgroundColor: "secondary.50",
-                    },
-                  }}
-                >
-                  ذخیره مقاله
-                </Button>
-              </Stack>
-            </Box>
+            <PostActions post={post} />
 
             {/* =====================================
                 Article Content
             ===================================== */}
-            <Box
-              sx={{
-                p: {
-                  xs: 2.5,
-                  sm: 4,
-                  md: 5,
-                },
-                borderRadius: 3,
-                border: 1,
-                borderColor: "secondary.100",
-                backgroundColor: "background.paper",
-              }}
-            >
-              {/* Intro */}
-              <Box
-                sx={{
-                  position: "relative",
-                  pr: {
-                    xs: 2,
-                    md: 2.5,
-                  },
-                  mb: 3,
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    right: 0,
-                    top: 4,
-                    width: 4,
-                    height: 60,
-                    borderRadius: 99,
-                    backgroundColor: "primary.main",
-                  },
-                }}
-              >
-                <Typography
-                  component="h2"
-                  sx={{
-                    fontSize: {
-                      xs: 21,
-                      md: 26,
-                    },
-                    fontWeight: 800,
-                    lineHeight: 1.8,
-                    color: "text.primary",
-                  }}
-                >
-                  {post.briefText}
-                </Typography>
-              </Box>
-
-              {/* Body */}
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: 16,
-                    md: 18,
-                  },
-                  lineHeight: 2.6,
-                  color: "text.secondary",
-                  whiteSpace: "pre-line",
-                }}
-              >
-                {post.text}
-              </Typography>
-            </Box>
+            <ArticleContent post={post} />
           </Box>
 
           {/* =======================================
