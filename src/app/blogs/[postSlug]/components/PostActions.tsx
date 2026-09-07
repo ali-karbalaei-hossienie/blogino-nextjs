@@ -31,7 +31,11 @@ const PostActions = ({ post }: { post: BlogPost }) => {
         {/* Like */}
         <Button
           disableRipple
-          startIcon={<FavoriteBorderIcon sx={{ color: "primary.500" }} />}
+          startIcon={
+            <FavoriteBorderIcon
+              sx={{ color: "primary.500", width: 22, height: 22 }}
+            />
+          }
           sx={{
             minWidth: 88,
             height: 46,
