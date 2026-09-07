@@ -5,6 +5,7 @@ import vazirFont from "@/constants/localFont";
 import Header from "@/components/Header";
 import "../global.css";
 import { Toaster } from "sonner";
+import AuthProvider from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: {
@@ -23,12 +24,14 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className={`${vazirFont.variable} font-sans`}>
-        <ThemeRegistry>
-          <Toaster position="top-center" />
+        <AuthProvider>
+          <ThemeRegistry>
+            <Toaster position="top-center" />
 
-          <Header />
-          {children}
-        </ThemeRegistry>
+            <Header />
+            {children}
+          </ThemeRegistry>
+        </AuthProvider>
       </body>
     </html>
   );

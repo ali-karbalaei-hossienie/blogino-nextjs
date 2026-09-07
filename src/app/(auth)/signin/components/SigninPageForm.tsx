@@ -19,12 +19,15 @@ import PasswordField from "../../components/PasswordField";
 import { signinApi } from "@/services/authServices";
 import { toast } from "sonner";
 import { authTpe } from "@/services/types";
+import { useAuth } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "ورود",
   description: "ورود به حساب کاربری در بلاگینو",
 };
 export default function SigninPageForm() {
+  const { signin } = useAuth();
+
   const {
     register,
     control,
@@ -36,22 +39,7 @@ export default function SigninPageForm() {
   });
 
   const onSubmit = async (values: LoginValues) => {
-    try {
-      await signinApi({
-        email: values.email,
-        password: values.password,
-      });
-
-      toast.success("ثبت‌نام با موفقیت انجام شد");
-
-      // router.push("/signin");
-    } catch (error: any) {
-      const message =
-        error?.response?.data?.message ||
-        "ثبت‌نام ناموفق بود. لطفاً دوباره تلاش کنید.";
-
-      toast.error(message);
-    }
+    await signin(values);
   };
   return (
     <Layout

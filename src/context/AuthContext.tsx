@@ -1,7 +1,8 @@
+"use client";
 import { LoginValues } from "@/app/(auth)/lib/authSchemas";
 import { signinApi, signupApi } from "@/services/authServices";
 import { authTpe } from "@/services/types";
-import { createContext, ReactNode, useReducer } from "react";
+import { createContext, ReactNode, useContext, useReducer } from "react";
 import { toast } from "sonner";
 
 type AuthState = {
@@ -14,8 +15,10 @@ type AuthState = {
 type AuthContextValue = {
   signup: (value: authTpe) => void;
   signin: (value: LoginValues) => void;
-
-  state: AuthState;
+  user: unknown;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: unknown;
 };
 
 const initialState: AuthState = {
@@ -24,7 +27,14 @@ const initialState: AuthState = {
   isLoading: true,
   error: null,
 };
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const AuthContext = createContext<AuthContextValue>({
+  user: null,
+  isAuthenticated: false,
+  isLoading: true,
+  error: null,
+  signin: () => {},
+  signup: () => {},
+});
 
 const authReducer = (state: AuthState, action: any): AuthState => {
   switch (action.type) {
@@ -80,7 +90,10 @@ const authReducer = (state: AuthState, action: any): AuthState => {
 };
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [{ error, isAuthenticated, isLoading, user }, dispatch] = useReducer(
+    authReducer,
+    initialState,
+  );
 
   const signup = async (values: authTpe) => {
     try {
@@ -115,8 +128,16 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ signup, state, signin }}>
+    <AuthContext.Provider
+      value={{ signup, error, isAuthenticated, isLoading, user, signin }}
+    >
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) throw new Error("not found Auth context");
+  return useContext(AuthContext);
 }

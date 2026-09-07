@@ -17,8 +17,10 @@ import PasswordField from "../../components/PasswordField";
 import { signupSchema, SignupValues } from "../../lib/authSchemas";
 import { signupApi } from "@/services/authServices";
 import { authTpe } from "@/services/types";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignupPageForm() {
+  const { signup } = useAuth();
   const {
     register,
     control,
@@ -35,23 +37,7 @@ export default function SignupPageForm() {
   });
 
   const onSubmit = async (values: authTpe) => {
-    try {
-      await signupApi({
-        email: values.email,
-        name: values.name,
-        password: values.password,
-      });
-
-      toast.success("ثبت‌نام با موفقیت انجام شد");
-
-      // router.push("/signin");
-    } catch (error: any) {
-      const message =
-        error?.response?.data?.message ||
-        "ثبت‌نام ناموفق بود. لطفاً دوباره تلاش کنید.";
-
-      toast.error(message);
-    }
+    await signup(values);
   };
 
   return (
