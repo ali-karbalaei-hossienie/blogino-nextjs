@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ThemeRegistry from "../components/ThemeRegistry";
 import vazirFont from "@/constants/localFont";
 import Header from "@/components/Header";
+import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
   title: {

@@ -57,17 +57,17 @@ const Header = () => {
 
             <Typography
               component={Link}
-              href="/login"
+              href="/signin"
               sx={{
                 textDecoration: "none",
                 color:
-                  pathname === "/login" ? "primary.main" : "text.secondary",
-                fontWeight: pathname === "/login" ? 600 : 400,
+                  pathname === "/signin" ? "primary.main" : "text.secondary",
+                fontWeight: pathname === "/signin" ? 600 : 400,
                 fontSize: "0.95rem",
                 transition: "color 0.2s",
                 "&:hover": {
                   color:
-                    pathname === "/login" ? "primary.main" : "text.primary",
+                    pathname === "/signin" ? "primary.main" : "text.primary",
                 },
               }}
             >
