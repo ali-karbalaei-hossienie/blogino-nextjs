@@ -16,14 +16,15 @@ import { Metadata } from "next";
 import { loginSchema, LoginValues } from "../../lib/authSchemas";
 import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
+import { signinApi } from "@/services/authServices";
+import { toast } from "sonner";
+import { authTpe } from "@/services/types";
 
 export const metadata: Metadata = {
   title: "ورود",
   description: "ورود به حساب کاربری در بلاگینو",
 };
 export default function SigninPageForm() {
-  const [serverError, setServerError] = useState<string | null>(null);
-
   const {
     register,
     control,
@@ -35,16 +36,23 @@ export default function SigninPageForm() {
   });
 
   const onSubmit = async (values: LoginValues) => {
-    setServerError(null);
     try {
-      // TODO: این بخش را به فراخوانی API واقعی خودتان وصل کنید
-      // await fetch("/api/auth/login", { method: "POST", body: JSON.stringify(values) });
-      console.log(values);
-    } catch {
-      setServerError("ورود ناموفق بود. ایمیل یا رمز عبور را بررسی کنید.");
+      await signinApi({
+        email: values.email,
+        password: values.password,
+      });
+
+      toast.success("ثبت‌نام با موفقیت انجام شد");
+
+      // router.push("/signin");
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        "ثبت‌نام ناموفق بود. لطفاً دوباره تلاش کنید.";
+
+      toast.error(message);
     }
   };
-
   return (
     <Layout
       title="ورود"
@@ -64,8 +72,6 @@ export default function SigninPageForm() {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
-        {serverError && <Alert severity="error">{serverError}</Alert>}
-
         <TextField
           label="ایمیل"
           type="email"

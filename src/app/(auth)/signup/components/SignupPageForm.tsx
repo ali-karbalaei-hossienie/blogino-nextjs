@@ -16,7 +16,7 @@ import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
 import { signupSchema, SignupValues } from "../../lib/authSchemas";
 import { signupApi } from "@/services/authServices";
-import { SignupType } from "@/services/types";
+import { authTpe } from "@/services/types";
 
 export default function SignupPageForm() {
   const {
@@ -34,7 +34,7 @@ export default function SignupPageForm() {
     },
   });
 
-  const onSubmit = async (values: SignupType) => {
+  const onSubmit = async (values: authTpe) => {
     try {
       await signupApi({
         email: values.email,
