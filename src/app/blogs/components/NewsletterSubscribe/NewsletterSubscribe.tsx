@@ -1,8 +1,13 @@
-import { Box, Typography, Button } from "@mui/material";
+"use client";
+import { Box, Typography, Button, useTheme } from "@mui/material";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SendOutlined from "@mui/icons-material/SendOutlined";
+import { useRouter } from "next/navigation";
 
 const NewsletterSubscribe = () => {
+  const theme = useTheme();
+  const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -63,13 +68,15 @@ const NewsletterSubscribe = () => {
       </Typography>
 
       <Button
+        onClick={() => router.push("/signin")}
         fullWidth
         startIcon={
           <SendOutlined sx={{ fontSize: 18, transform: "rotate(321deg)" }} />
         }
         sx={{
           position: "relative",
-          background: "linear-gradient(90deg, #3B5FE0 10%, #2E4BC7 100%)",
+          //  "linear-gradient(90deg, #3B5FE0 10%, #2E4BC7 100%)"
+          background: ` linear-gradient(90deg, ${theme.palette.primary[600]} 10%, ${theme.palette.primary[900]} 100%)`,
           color: "primary.contrastText",
           fontWeight: 700,
           fontSize: 13.5,

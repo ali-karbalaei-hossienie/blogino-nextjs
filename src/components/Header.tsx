@@ -54,25 +54,6 @@ const Header = () => {
                 </Typography>
               ))}
             </Stack>
-
-            <Typography
-              component={Link}
-              href="/signin"
-              sx={{
-                textDecoration: "none",
-                color:
-                  pathname === "/signin" ? "primary.main" : "text.secondary",
-                fontWeight: pathname === "/signin" ? 600 : 400,
-                fontSize: "0.95rem",
-                transition: "color 0.2s",
-                "&:hover": {
-                  color:
-                    pathname === "/signin" ? "primary.main" : "text.primary",
-                },
-              }}
-            >
-              ورود
-            </Typography>
           </Toolbar>
         </Container>
       </AppBar>
