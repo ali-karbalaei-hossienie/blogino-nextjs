@@ -1,7 +1,7 @@
 // src/theme.ts
 "use client";
 
-import { createTheme } from "@mui/material/styles";
+import { createTheme, type Theme } from "@mui/material/styles";
 import vazirFont from "@/constants/localFont";
 
 declare module "@mui/material/styles" {
@@ -126,8 +126,23 @@ export const getAppTheme = (mode: "light" | "dark" = "light") => {
         50: "rgb(254, 242, 244)",
       },
     },
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          input: {
+            "&:-webkit-autofill": {
+              WebkitBoxShadow: `0 0 0 100px ${
+                isLight ? "#ffffff" : "rgb(19, 26, 41)"
+              } inset`,
+              WebkitTextFillColor: isLight ? "rgb(19, 26, 41)" : "#ffffff",
+              caretColor: "inherit",
+            },
+          },
+        },
+      },
+    },
   });
 };
 
-const theme = getAppTheme("dark");
+const theme: Theme = getAppTheme("dark");
 export default theme;
