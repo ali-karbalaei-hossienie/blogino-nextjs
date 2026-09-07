@@ -20,15 +20,15 @@ const ArticleContent = ({ post }: { post: BlogPost }) => {
       <Box
         sx={{
           position: "relative",
-          pr: {
+          pl: {
             xs: 2,
             md: 2.5,
           },
-          mb: 3,
+          mb: 2,
           "&::before": {
             content: '""',
             position: "absolute",
-            right: 0,
+            left: 0,
             top: 4,
             width: 4,
             height: 60,
@@ -60,7 +60,11 @@ const ArticleContent = ({ post }: { post: BlogPost }) => {
             xs: 16,
             md: 18,
           },
-          lineHeight: 2.6,
+          pl: {
+            xs: 2,
+            md: 2.5,
+          },
+          // lineHeight: 2.6,
           color: "text.secondary",
           whiteSpace: "pre-line",
         }}
