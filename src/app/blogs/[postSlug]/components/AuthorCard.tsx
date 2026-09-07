@@ -92,7 +92,7 @@ const AuthorCard = ({ post }: { post: BlogPost }) => {
           borderRadius: 2,
           color: "primary.400",
           borderColor: "primary.900",
-          backgroundColor: "primary.50",
+          backgroundColor: "secondary.100",
 
           "&:hover": {
             borderColor: "primary.main",
