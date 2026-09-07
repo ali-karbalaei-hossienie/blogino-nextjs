@@ -19,16 +19,17 @@ export default function Layout({
   return (
     <Box
       sx={{
-        position: "fixed",
-        inset: 0,
+        minHeight: "100dvh",
+        height: "100dvh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
         boxSizing: "border-box",
         px: 2,
-        py: { xs: 2, sm: 6 },
+        py: { xs: 2, sm: 4 },
         bgcolor: theme.palette.background.default,
+        position: "relative",
       }}
     >
       <Box
@@ -41,10 +42,11 @@ export default function Layout({
           width: 640,
           height: 640,
           borderRadius: "50%",
-          background: `radial-gradient(closest-side, ${alpha(
-            theme.palette.primary.main,
-            0.2,
-          )}, transparent)`,
+          background: `radial-gradient(
+            closest-side,
+            ${alpha(theme.palette.primary.main, 0.2)},
+            transparent
+          )`,
           filter: "blur(10px)",
           pointerEvents: "none",
         }}
@@ -56,6 +58,8 @@ export default function Layout({
           position: "relative",
           width: "100%",
           maxWidth: 420,
+          maxHeight: "100%",
+          overflow: "auto",
           bgcolor: theme.palette.background.paper,
           border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
@@ -70,6 +74,7 @@ export default function Layout({
           >
             {title}
           </Typography>
+
           {subtitle && (
             <Typography variant="body2" color="text.secondary">
               {subtitle}
