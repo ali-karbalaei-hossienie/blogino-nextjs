@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Alert,
   Button,
   CircularProgress,
   Link as MuiLink,
@@ -10,15 +9,16 @@ import {
   TextField,
 } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { signupSchema, SignupValues } from "../../lib/authSchemas";
+import { toast } from "sonner";
+
 import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
+import { signupSchema, SignupValues } from "../../lib/authSchemas";
+import { signupApi } from "@/services/authServices";
+import { SignupType } from "@/services/types";
 
 export default function SignupPageForm() {
-  const [serverError, setServerError] = useState<string | null>(null);
-
   const {
     register,
     control,
@@ -27,21 +27,30 @@ export default function SignupPageForm() {
   } = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const onSubmit = async (values: SignupValues) => {
-    setServerError(null);
+  const onSubmit = async (values: SignupType) => {
     try {
-      // TODO: این بخش را به فراخوانی API واقعی خودتان وصل کنید
-      // await fetch("/api/auth/signup", { method: "POST", body: JSON.stringify(values) });
-      console.log(values);
-    } catch {
-      setServerError("ثبت‌نام ناموفق بود. لطفاً دوباره تلاش کنید.");
+      await signupApi({
+        email: values.email,
+        name: values.name,
+        password: values.password,
+      });
+
+      toast.success("ثبت‌نام با موفقیت انجام شد");
+
+      // router.push("/signin");
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        "ثبت‌نام ناموفق بود. لطفاً دوباره تلاش کنید.";
+
+      toast.error(message);
     }
   };
 
@@ -64,15 +73,13 @@ export default function SignupPageForm() {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
-        {serverError && <Alert severity="error">{serverError}</Alert>}
-
         <TextField
           label="نام و نام خانوادگی"
           autoComplete="name"
           fullWidth
-          error={!!errors.fullName}
-          helperText={errors.fullName?.message}
-          {...register("fullName")}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+          {...register("name")}
         />
 
         <TextField

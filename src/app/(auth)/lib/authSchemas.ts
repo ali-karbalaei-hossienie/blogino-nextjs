@@ -9,7 +9,7 @@ export type LoginValues = z.infer<typeof loginSchema>;
 
 export const signupSchema = z
   .object({
-    fullName: z
+    name: z
       .string()
       .min(1, "نام و نام خانوادگی را وارد کنید")
       .min(3, "نام و نام خانوادگی باید حداقل ۳ حرف باشد"),

@@ -4,6 +4,7 @@ import ThemeRegistry from "../components/ThemeRegistry";
 import vazirFont from "@/constants/localFont";
 import Header from "@/components/Header";
 import "../global.css";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -23,6 +24,8 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body className={`${vazirFont.variable} font-sans`}>
         <ThemeRegistry>
+          <Toaster position="top-center" />
+
           <Header />
           {children}
         </ThemeRegistry>
