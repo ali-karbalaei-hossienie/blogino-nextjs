@@ -17,7 +17,7 @@ export default function PostCard({ post }: BlogCardProps) {
       <Card
         sx={{
           width: "100%",
-          bgcolor: "background.default",
+          bgcolor: "background.paper",
           border: 1,
           borderColor: "secondary.200",
           borderRadius: 2,
@@ -61,7 +61,6 @@ export default function PostCard({ post }: BlogCardProps) {
 
         <CardContent
           sx={{
-            bgcolor: "secondary.100",
             mx: 1,
             mb: 1,
             mt: 1,

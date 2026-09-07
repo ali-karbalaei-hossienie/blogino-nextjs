@@ -2,27 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
-import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import { BlogPost } from "@/app/types";
+import Link from "next/link";
+import HeroSection from "./components/HeroSection";
 
 interface PostPageProps {
   params: Promise<{
@@ -115,17 +106,9 @@ const PostPage = async ({ params }: PostPageProps) => {
     notFound();
   }
 
-  const formattedDate = new Intl.DateTimeFormat("fa-IR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(post.createdAt));
-
   return (
     <Box
-      dir="rtl"
       sx={{
-        minHeight: "100vh",
         py: {
           xs: 2,
           sm: 3,
@@ -149,7 +132,6 @@ const PostPage = async ({ params }: PostPageProps) => {
         ========================================= */}
         <Stack
           direction="row"
-          alignItems="center"
           spacing={0.8}
           sx={{
             mb: {
@@ -158,33 +140,38 @@ const PostPage = async ({ params }: PostPageProps) => {
             },
             flexWrap: "wrap",
             rowGap: 1,
+            alignItems: "center",
           }}
         >
-          <Typography
-            sx={{
-              fontSize: 13,
-              color: "secondary.400",
-            }}
-          >
-            خانه
-          </Typography>
+          <Link style={{ display: "flex", alignItems: "center" }} href="/">
+            <Typography
+              sx={{
+                fontSize: 13,
+                color: "secondary.400",
+              }}
+            >
+              خانه
+            </Typography>
 
-          <ArrowBackIosNewRoundedIcon
-            sx={{
-              fontSize: 12,
-              color: "secondary.300",
-              transform: "rotate(180deg)",
-            }}
-          />
+            <ArrowBackIosNewRoundedIcon
+              sx={{
+                fontSize: 12,
+                color: "secondary.300",
+                transform: "rotate(180deg)",
+              }}
+            />
+          </Link>
 
-          <Typography
-            sx={{
-              fontSize: 13,
-              color: "secondary.400",
-            }}
-          >
-            {post.category?.title}
-          </Typography>
+          <Link href={"/blogs"}>
+            <Typography
+              sx={{
+                fontSize: 13,
+                color: "secondary.400",
+              }}
+            >
+              {post.category?.title}
+            </Typography>
+          </Link>
 
           <ArrowBackIosNewRoundedIcon
             sx={{
@@ -228,223 +215,7 @@ const PostPage = async ({ params }: PostPageProps) => {
             {/* =====================================
                 Hero
             ===================================== */}
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  md: "minmax(0, 0.95fr) minmax(0, 1.05fr)",
-                },
-                gap: {
-                  xs: 3,
-                  md: 4,
-                },
-                alignItems: "center",
-                mb: 3,
-              }}
-            >
-              {/* Cover */}
-              <Box
-                sx={{
-                  position: "relative",
-                  width: "100%",
-                  aspectRatio: "16 / 9",
-                  overflow: "hidden",
-                  borderRadius: 3,
-                  border: 1,
-                  borderColor: "secondary.100",
-                  backgroundColor: "background.paper",
-                  boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
-                }}
-              >
-                <Image
-                  src={post.coverImageUrl}
-                  alt={post.title}
-                  fill
-                  priority
-                  sizes="(max-width: 900px) 100vw, 60vw"
-                  style={{
-                    objectFit: "cover",
-                  }}
-                />
-
-                <Box
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(to top, rgba(0,0,0,0.25), transparent 50%)",
-                    pointerEvents: "none",
-                  }}
-                />
-              </Box>
-
-              {/* Header */}
-              <Box>
-                {/* Category */}
-                <Chip
-                  icon={
-                    <CodeRoundedIcon
-                      sx={{
-                        fontSize: "18px !important",
-                        color: "primary.400 !important",
-                      }}
-                    />
-                  }
-                  label={post.category?.title || "برنامه نویسی"}
-                  sx={{
-                    height: 40,
-                    px: 1,
-                    mb: 2,
-                    borderRadius: 2,
-                    border: 1,
-                    borderColor: "primary.900",
-                    backgroundColor: "primary.50",
-                    color: "primary.500",
-                    fontSize: 13,
-                    fontWeight: 700,
-                  }}
-                />
-
-                {/* Title */}
-                <Typography
-                  component="h1"
-                  sx={{
-                    fontSize: {
-                      xs: 30,
-                      sm: 38,
-                      md: 46,
-                    },
-                    fontWeight: 900,
-                    lineHeight: 1.5,
-                    color: "text.primary",
-                    mb: 1.5,
-                  }}
-                >
-                  {post.title}
-                </Typography>
-
-                {/* Brief */}
-                <Typography
-                  sx={{
-                    fontSize: {
-                      xs: 16,
-                      md: 18,
-                    },
-                    lineHeight: 2,
-                    color: "text.secondary",
-                    mb: 3,
-                  }}
-                >
-                  {post.briefText}
-                </Typography>
-
-                {/* Meta */}
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={2}
-                  useFlexGap
-                  flexWrap="wrap"
-                >
-                  {/* Author */}
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <Box
-                      sx={{
-                        position: "relative",
-                        width: 42,
-                        height: 42,
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        flexShrink: 0,
-                        border: 2,
-                        borderColor: "secondary.200",
-                      }}
-                    >
-                      <Image
-                        src={post.author.avatarUrl}
-                        alt={post.author.name}
-                        fill
-                        sizes="42px"
-                        style={{
-                          objectFit: "cover",
-                        }}
-                      />
-                    </Box>
-
-                    <Box>
-                      <Typography
-                        sx={{
-                          fontSize: 13,
-                          fontWeight: 700,
-                          color: "text.primary",
-                        }}
-                      >
-                        {post.author.name}
-                      </Typography>
-
-                      <Typography
-                        sx={{
-                          fontSize: 11,
-                          color: "text.secondary",
-                        }}
-                      >
-                        نویسنده
-                      </Typography>
-                    </Box>
-                  </Stack>
-
-                  <Divider
-                    orientation="vertical"
-                    flexItem
-                    sx={{
-                      display: {
-                        xs: "none",
-                        sm: "block",
-                      },
-                    }}
-                  />
-
-                  {/* Reading time */}
-                  <Stack direction="row" alignItems="center" spacing={0.7}>
-                    <AccessTimeOutlinedIcon
-                      sx={{
-                        fontSize: 18,
-                        color: "primary.400",
-                      }}
-                    />
-
-                    <Typography
-                      sx={{
-                        fontSize: 13,
-                        color: "text.secondary",
-                      }}
-                    >
-                      {post.readingTime} دقیقه مطالعه
-                    </Typography>
-                  </Stack>
-
-                  {/* Date */}
-                  <Stack direction="row" alignItems="center" spacing={0.7}>
-                    <CalendarMonthOutlinedIcon
-                      sx={{
-                        fontSize: 18,
-                        color: "primary.400",
-                      }}
-                    />
-
-                    <Typography
-                      sx={{
-                        fontSize: 13,
-                        color: "text.secondary",
-                      }}
-                    >
-                      {formattedDate}
-                    </Typography>
-                  </Stack>
-                </Stack>
-              </Box>
-            </Box>
+            <HeroSection post={post} />
 
             {/* =====================================
                 Actions
@@ -465,8 +236,10 @@ const PostPage = async ({ params }: PostPageProps) => {
             >
               <Stack
                 direction="row"
-                justifyContent="space-between"
-                alignItems="center"
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
               >
                 {/* Like */}
                 <Button
@@ -710,11 +483,11 @@ const PostPage = async ({ params }: PostPageProps) => {
             >
               <Stack
                 direction="row"
-                alignItems="center"
-                spacing={1}
                 sx={{
+                  alignItems: "center",
                   mb: 1,
                 }}
+                spacing={1}
               >
                 <MenuBookOutlinedIcon
                   sx={{
@@ -779,7 +552,7 @@ const StatRow = ({ icon, title, value, last = false }: StatRowProps) => {
         borderColor: "secondary.100",
       }}
     >
-      <Stack direction="row" alignItems="center" spacing={1}>
+      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
         <Box
           sx={{
             display: "flex",
