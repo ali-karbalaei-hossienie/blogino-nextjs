@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import { BlogPost } from "@/app/types";
+import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
 import Link from "next/link";
+import ArticleContent from "./components/ArticleContent";
+import AuthorCard from "./components/AuthorCard";
 import HeroSection from "./components/HeroSection";
 import PostActions from "./components/PostActions";
-import ArticleContent from "./components/ArticleContent";
+import StatRow from "./components/StatRow";
 
 interface PostPageProps {
   params: Promise<{
@@ -248,101 +248,7 @@ const PostPage = async ({ params }: PostPageProps) => {
             {/* =====================================
                 Author Card
             ===================================== */}
-            <Box
-              sx={{
-                p: 3,
-                borderRadius: 3,
-                border: 1,
-                borderColor: "secondary.100",
-                backgroundColor: "background.paper",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  mb: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    position: "relative",
-                    width: 82,
-                    height: 82,
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    border: 3,
-                    borderColor: "secondary.200",
-                  }}
-                >
-                  <Image
-                    src={post.author.avatarUrl}
-                    alt={post.author.name}
-                    fill
-                    sizes="82px"
-                    style={{
-                      objectFit: "cover",
-                    }}
-                  />
-                </Box>
-              </Box>
-
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: 18,
-                  fontWeight: 800,
-                  color: "text.primary",
-                  mb: 0.5,
-                }}
-              >
-                {post.author.name}
-              </Typography>
-
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: 12,
-                  color: "text.secondary",
-                  mb: 2.5,
-                }}
-              >
-                نویسنده و توسعه‌دهنده
-              </Typography>
-
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: 13,
-                  lineHeight: 2.1,
-                  color: "text.secondary",
-                  mb: 2.5,
-                }}
-              >
-                علاقه‌مند به تکنولوژی، برنامه‌نویسی و فریلنسری. در اینجا
-                تجربه‌ها و دانسته‌هایم را به اشتراک می‌گذارم.
-              </Typography>
-
-              <Button
-                fullWidth
-                variant="outlined"
-                startIcon={<PersonOutlineOutlinedIcon />}
-                sx={{
-                  height: 46,
-                  borderRadius: 2,
-                  color: "primary.400",
-                  borderColor: "primary.900",
-                  backgroundColor: "primary.50",
-
-                  "&:hover": {
-                    borderColor: "primary.main",
-                    backgroundColor: "primary.100",
-                  },
-                }}
-              >
-                مشاهده پروفایل
-              </Button>
-            </Box>
+            <AuthorCard post={post} />
 
             {/* =====================================
                 Stats
@@ -364,7 +270,7 @@ const PostPage = async ({ params }: PostPageProps) => {
                 }}
                 spacing={1}
               >
-                <MenuBookOutlinedIcon
+                <StackedBarChartIcon
                   sx={{
                     fontSize: 20,
                     color: "primary.400",
@@ -404,62 +310,6 @@ const PostPage = async ({ params }: PostPageProps) => {
           </Stack>
         </Box>
       </Container>
-    </Box>
-  );
-};
-
-interface StatRowProps {
-  icon: React.ReactNode;
-  title: string;
-  value: string;
-  last?: boolean;
-}
-
-const StatRow = ({ icon, title, value, last = false }: StatRowProps) => {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        py: 1.7,
-        borderBottom: last ? 0 : 1,
-        borderColor: "secondary.100",
-      }}
-    >
-      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-        <Box
-          sx={{
-            display: "flex",
-            color: "primary.400",
-
-            "& svg": {
-              fontSize: 19,
-            },
-          }}
-        >
-          {icon}
-        </Box>
-
-        <Typography
-          sx={{
-            fontSize: 13,
-            color: "text.secondary",
-          }}
-        >
-          {title}
-        </Typography>
-      </Stack>
-
-      <Typography
-        sx={{
-          fontSize: 14,
-          fontWeight: 700,
-          color: "text.primary",
-        }}
-      >
-        {value}
-      </Typography>
     </Box>
   );
 };
