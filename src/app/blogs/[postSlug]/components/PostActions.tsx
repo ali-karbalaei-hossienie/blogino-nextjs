@@ -31,18 +31,15 @@ const PostActions = ({ post }: { post: BlogPost }) => {
         {/* Like */}
         <Button
           disableRipple
-          startIcon={<FavoriteBorderIcon />}
+          startIcon={<FavoriteBorderIcon sx={{ color: "primary.500" }} />}
           sx={{
             minWidth: 88,
             height: 46,
-            borderRadius: 2,
-            color: "primary.400",
-            backgroundColor: "primary.50",
-            border: 1,
-            borderColor: "primary.100",
-
+            borderRadius: 4,
+            color: "primary.contrastText",
+            backgroundColor: "secondary.200",
             "&:hover": {
-              backgroundColor: "primary.100",
+              backgroundColor: "secondary.300",
             },
           }}
         >
@@ -60,10 +57,10 @@ const PostActions = ({ post }: { post: BlogPost }) => {
             color: "text.secondary",
             backgroundColor: "background.paper",
             border: 1,
-            borderColor: "secondary.100",
+            borderColor: "secondary.300",
 
             "&:hover": {
-              backgroundColor: "secondary.50",
+              backgroundColor: "secondary.100",
             },
           }}
         >
