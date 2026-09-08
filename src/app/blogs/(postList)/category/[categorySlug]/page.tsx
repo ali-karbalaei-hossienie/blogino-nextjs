@@ -16,10 +16,14 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   let posts: BlogPost[] = [];
 
   try {
+    const cookieStore = await cookies();
+    const options = setCookiesOnReq(cookieStore);
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/post/list?categorySlug=${encodeURIComponent(
         categorySlug,
       )}`,
+      options,
     );
 
     if (!res.ok) {
