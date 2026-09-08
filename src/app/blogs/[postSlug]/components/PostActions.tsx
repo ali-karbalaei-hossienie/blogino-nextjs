@@ -22,6 +22,7 @@ const PostActions = ({ post }: { post: BlogPost }) => {
       toast.error(err?.response?.data?.message);
     }
   };
+
   return (
     <Box
       sx={{
