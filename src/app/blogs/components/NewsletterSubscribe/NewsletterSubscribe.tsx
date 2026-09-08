@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Typography, Button, useTheme, Avatar } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Skeleton,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SendOutlined from "@mui/icons-material/SendOutlined";
@@ -16,11 +23,84 @@ const NewsletterSubscribe = () => {
   const theme = useTheme();
   const router = useRouter();
 
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
 
   const handleLogout = () => {
     logout();
   };
+
+  // Loading
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          p: 2.5,
+          borderRadius: 3,
+          overflow: "hidden",
+          backgroundColor: "secondary.200",
+        }}
+      >
+        {/* User skeleton */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            mb: 2,
+          }}
+        >
+          <Skeleton
+            variant="circular"
+            width={42}
+            height={42}
+            animation="wave"
+          />
+
+          <Box sx={{ flex: 1 }}>
+            <Skeleton variant="text" width="55%" height={22} animation="wave" />
+
+            <Skeleton variant="text" width="35%" height={18} animation="wave" />
+          </Box>
+        </Box>
+
+        {/* Profile skeleton */}
+        <Skeleton
+          variant="rounded"
+          width="100%"
+          height={40}
+          sx={{
+            borderRadius: 2,
+            mb: 1,
+          }}
+          animation="wave"
+        />
+
+        {/* Bookmarks skeleton */}
+        <Skeleton
+          variant="rounded"
+          width="100%"
+          height={52}
+          sx={{
+            borderRadius: 2,
+            mb: 1.2,
+          }}
+          animation="wave"
+        />
+
+        {/* Logout skeleton */}
+        <Skeleton
+          variant="rounded"
+          width="100%"
+          height={35}
+          sx={{
+            borderRadius: 2,
+          }}
+          animation="wave"
+        />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -95,13 +175,11 @@ const NewsletterSubscribe = () => {
               fontWeight: 700,
               textTransform: "none",
               boxShadow: "none",
-
               background: `linear-gradient(
                 90deg,
                 ${theme.palette.primary[600]} 10%,
                 ${theme.palette.primary[900]} 100%
               )`,
-
               "&:hover": {
                 boxShadow: "none",
                 background: `linear-gradient(
@@ -126,13 +204,10 @@ const NewsletterSubscribe = () => {
               py: 1.1,
               px: 1.2,
               mb: 1.2,
-
               borderRadius: 2,
               backgroundColor: "background.paper",
-
               cursor: "pointer",
               transition: "all 0.2s ease",
-
               "&:hover": {
                 backgroundColor: "action.hover",
                 transform: "translateY(-1px)",
@@ -144,13 +219,10 @@ const NewsletterSubscribe = () => {
                 width: 32,
                 height: 32,
                 flexShrink: 0,
-
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-
                 borderRadius: 1.5,
-
                 backgroundColor: "secondary.200",
                 color: "primary.main",
               }}
@@ -202,16 +274,12 @@ const NewsletterSubscribe = () => {
               sx={{
                 width: 34,
                 height: 34,
-
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-
                 borderRadius: 2,
-
                 backgroundColor: "primary.main",
                 color: "primary.contrastText",
-
                 flexShrink: 0,
               }}
             >
@@ -259,16 +327,12 @@ const NewsletterSubscribe = () => {
                 ${theme.palette.primary[600]} 10%,
                 ${theme.palette.primary[900]} 100%
               )`,
-
               color: "primary.contrastText",
               fontWeight: 700,
               fontSize: 13.5,
-
               borderRadius: 2,
               py: 1,
-
               textTransform: "none",
-
               "&:hover": {
                 backgroundColor: "primary.dark",
               },
