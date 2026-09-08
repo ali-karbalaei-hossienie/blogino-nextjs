@@ -23,7 +23,7 @@ const PostAction = ({ post }: { post: BlogPost }) => {
           direction="row"
           sx={{
             alignItems: "center",
-            bgcolor: "secondary.200",
+            bgcolor: "secondary.300",
             borderRadius: 1,
             height: 29,
             color: "secondary.600",
@@ -84,22 +84,23 @@ const PostAction = ({ post }: { post: BlogPost }) => {
               height: 29,
               color: "error.main",
               transition: "all 0.3s ease",
+              padding: 2.5,
             }}
           >
             <FavoriteBorderRounded fontSize="small" />
+            <Typography
+              className="like-count"
+              sx={{
+                color: "error.main",
+                fontSize: 11,
+                transition: "all 0.3s ease",
+                padding: 0.2,
+                lineHeight: 0,
+              }}
+            >
+              {post.likesCount}
+            </Typography>
           </IconButton>
-
-          <Typography
-            className="like-count"
-            sx={{
-              color: "error.main",
-              fontSize: 11,
-              pr: 0.5,
-              transition: "all 0.3s ease",
-            }}
-          >
-            {post.likesCount}
-          </Typography>
         </Stack>
 
         {/* Bookmark */}
@@ -113,7 +114,7 @@ const PostAction = ({ post }: { post: BlogPost }) => {
             borderRadius: 1,
             transition: "all 0.3s ease",
             "&:hover": {
-              bgcolor: "primary.900",
+              bgcolor: "primary.400",
               "& .bookmark-icon": {
                 color: "primary.contrastText",
               },
