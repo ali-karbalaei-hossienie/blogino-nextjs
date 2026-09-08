@@ -14,7 +14,7 @@ const Sort = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentSort = searchParams.get("sort") || "newest";
+  const currentSort = searchParams.get("sort") || "latest";
 
   const handleSortChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value;

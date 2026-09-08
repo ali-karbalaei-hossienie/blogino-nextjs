@@ -1,7 +1,6 @@
-import Header from "@/components/Header";
 import { CircularProgress, Container, Grid } from "@mui/material";
-import CategoryList from "../components/Category/CategoryList";
 import { Suspense } from "react";
+import CategoryList from "../components/Category/CategoryList";
 
 export const metadata = {
   title: "بلاگ ها",
