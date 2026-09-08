@@ -16,6 +16,8 @@ import AuthorCard from "./components/AuthorCard";
 import HeroSection from "./components/HeroSection";
 import PostActions from "./components/PostActions";
 import StatRow from "./components/StatRow";
+import { cookies } from "next/headers";
+import setCookiesOnReq from "@/utils/setCookiesOnRequest";
 
 interface PostPageProps {
   params: Promise<{
@@ -84,12 +86,11 @@ export async function generateMetadata({
 
 const PostPage = async ({ params }: PostPageProps) => {
   const { postSlug } = await params;
-
+  const cookieStore = await cookies();
+  const options = setCookiesOnReq(cookieStore);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/post/slug/${postSlug}`,
-    {
-      cache: "no-store",
-    },
+    options,
   );
 
   if (res.status === 404) {
