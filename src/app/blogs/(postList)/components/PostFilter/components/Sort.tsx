@@ -1,43 +1,48 @@
 "use client";
-import SortIcon from "@mui/icons-material/Sort";
+
 import {
   FormControl,
   Grid,
-  InputAdornment,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Sort = () => {
-  const [sort, setSort] = useState("newest");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const currentSort = searchParams.get("sort") || "newest";
 
   const handleSortChange = (e: SelectChangeEvent<string>) => {
     const value = e.target.value;
-    setSort(value);
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (value) {
+      params.set("sort", value);
+    } else {
+      params.delete("sort");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
   };
+
   return (
     <Grid size={{ xs: 12, sm: 5, md: 4 }}>
-      <FormControl fullWidth size="small">
+      <FormControl size="small" fullWidth>
         <Select
-          value={sort}
+          value={currentSort}
           onChange={handleSortChange}
-          displayEmpty
-          startAdornment={
-            <InputAdornment position="start">
-              <SortIcon color="action" fontSize="small" />
-            </InputAdornment>
-          }
           sx={{
+            bgcolor: "background.paper",
             borderRadius: 2,
-            bgcolor: "secondary.100",
+            color: "text.primary",
           }}
         >
-          <MenuItem value="newest">جدیدترین</MenuItem>
+          <MenuItem value="latest">جدیدترین</MenuItem>
           <MenuItem value="oldest">قدیمی‌ترین</MenuItem>
-          <MenuItem value="most_viewed">پربازدیدترین</MenuItem>
-          <MenuItem value="most_popular">محبوب‌ترین</MenuItem>
         </Select>
       </FormControl>
     </Grid>

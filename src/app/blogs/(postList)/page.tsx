@@ -5,6 +5,8 @@ import setCookiesOnReq from "@/utils/setCookiesOnRequest";
 import { cookies } from "next/headers";
 import PostFilter from "./components/PostFilter/PostFilter";
 
+export const dynamic = "force-dynamic";
+
 interface BlogPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
@@ -15,6 +17,10 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
     typeof resolvedSearchParams.search === "string"
       ? resolvedSearchParams.search
       : "";
+  const sort =
+    typeof resolvedSearchParams.sort === "string"
+      ? resolvedSearchParams.sort
+      : "";
 
   let posts: BlogPost[] = [];
 
@@ -23,16 +29,17 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
     const options = setCookiesOnReq(cookieStore);
 
     const queryParams = new URLSearchParams();
-    if (search) {
-      queryParams.set("search", search);
-    }
+    if (search) queryParams.set("search", search);
+    if (sort) queryParams.set("sort", sort);
 
     const queryString = queryParams.toString();
     const url = `${process.env.NEXT_PUBLIC_API_URL}/post/list${
       queryString ? `?${queryString}` : ""
     }`;
 
-    const res = await fetch(url, options);
+    const res = await fetch(url, {
+      ...options,
+    });
 
     if (!res.ok) {
       throw new Error(`Failed to fetch posts: ${res.status}`);
