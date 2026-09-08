@@ -37,7 +37,11 @@ export default function SignupPageForm() {
   });
 
   const onSubmit = async (values: authTpe) => {
-    await signup(values);
+    await signup({
+      email: values.email,
+      name: values.name,
+      password: values.password,
+    });
   };
 
   return (

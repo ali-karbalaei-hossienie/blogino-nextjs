@@ -1,11 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useAuth } from "@/context/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Alert,
   Button,
   CircularProgress,
   Link as MuiLink,
@@ -13,13 +10,11 @@ import {
   TextField,
 } from "@mui/material";
 import { Metadata } from "next";
-import { loginSchema, LoginValues } from "../../lib/authSchemas";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
 import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
-import { signinApi } from "@/services/authServices";
-import { toast } from "sonner";
-import { authTpe } from "@/services/types";
-import { useAuth } from "@/context/AuthContext";
+import { loginSchema, LoginValues } from "../../lib/authSchemas";
 
 export const metadata: Metadata = {
   title: "ورود",
@@ -39,7 +34,10 @@ export default function SigninPageForm() {
   });
 
   const onSubmit = async (values: LoginValues) => {
-    await signin(values);
+    await signin({
+      email: values.email,
+      password: values.password,
+    });
   };
   return (
     <Layout

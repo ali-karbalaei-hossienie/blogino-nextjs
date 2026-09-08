@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import ThemeRegistry from "../components/ThemeRegistry";
 import vazirFont from "@/constants/localFont";
 import Header from "@/components/Header";
-import "../global.css";
 import { Toaster } from "sonner";
 import AuthProvider from "@/context/AuthContext";
 

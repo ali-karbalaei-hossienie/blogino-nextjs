@@ -1,12 +1,25 @@
 "use client";
 import { LoginValues } from "@/app/(auth)/lib/authSchemas";
-import { signinApi, signupApi } from "@/services/authServices";
-import { authTpe } from "@/services/types";
-import { createContext, ReactNode, useContext, useReducer } from "react";
+import { User } from "@/app/types";
+import {
+  getUserApi,
+  logoutApi,
+  signinApi,
+  signupApi,
+} from "@/services/authServices";
+import { authTpe, AuthUserType } from "@/services/types";
+import { useRouter } from "next/navigation";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import { toast } from "sonner";
 
 type AuthState = {
-  user: unknown;
+  user: AuthUserType | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: unknown;
@@ -15,7 +28,8 @@ type AuthState = {
 type AuthContextValue = {
   signup: (value: authTpe) => void;
   signin: (value: LoginValues) => void;
-  user: unknown;
+  logout: () => void;
+  user: AuthUserType | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: unknown;
@@ -34,6 +48,7 @@ const AuthContext = createContext<AuthContextValue>({
   error: null,
   signin: () => {},
   signup: () => {},
+  logout: () => {},
 });
 
 const authReducer = (state: AuthState, action: any): AuthState => {
@@ -95,7 +110,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     initialState,
   );
 
+  const router = useRouter();
+
   const signup = async (values: authTpe) => {
+    dispatch({ type: "loading" });
+
     try {
       const {
         data: { message, user },
@@ -112,6 +131,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signin = async (values: LoginValues) => {
+    dispatch({ type: "loading" });
+
     try {
       const {
         data: { message, user },
@@ -127,9 +148,46 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  async function getUser() {
+    dispatch({ type: "loading" });
+    try {
+      const {
+        data: { user },
+      } = await getUserApi();
+      dispatch({ type: "user/loaded", payload: user });
+    } catch (err: any) {
+      const error = err?.response?.data?.message;
+      dispatch({ type: "rejected", payload: error });
+    }
+  }
+  async function logout() {
+    try {
+      await logoutApi();
+      router.push("/");
+      dispatch({ type: "logout" });
+    } catch (error: any) {
+      toast.error(error);
+    }
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      await getUser();
+    }
+    fetchData();
+  }, []);
+
   return (
     <AuthContext.Provider
-      value={{ signup, error, isAuthenticated, isLoading, user, signin }}
+      value={{
+        signup,
+        error,
+        isAuthenticated,
+        isLoading,
+        user,
+        signin,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

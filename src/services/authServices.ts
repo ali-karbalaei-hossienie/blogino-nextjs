@@ -9,3 +9,11 @@ export async function signupApi(data: authTpe) {
 export async function signinApi(data: LoginValues) {
   return http.post(`/user/signin`, data).then(({ data }) => data);
 }
+
+export async function getUserApi() {
+  return http.get(`/user/profile`).then(({ data }) => data);
+}
+
+export function logoutApi() {
+  return http.post(`/user/logout`);
+}
