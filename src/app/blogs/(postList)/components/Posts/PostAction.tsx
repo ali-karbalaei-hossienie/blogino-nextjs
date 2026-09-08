@@ -1,12 +1,13 @@
 "use client";
 
 import { BlogPost } from "@/app/types";
-import { likePostApi } from "@/services/postServices";
+import { bookmarkPostApi, likePostApi } from "@/services/postServices";
 import { toPersianDigits } from "@/utils/toPersianDigits";
 import {
   BookmarkBorderRounded,
   ChatBubbleOutlineRounded,
   FavoriteBorderRounded,
+  Bookmark,
 } from "@mui/icons-material";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -19,6 +20,16 @@ const PostAction = ({ post }: { post: BlogPost }) => {
   const handleLikePost = async (id: string) => {
     try {
       const { message } = await likePostApi(id);
+      router.refresh();
+      toast.success(message);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
+  const handleBookmark = async (id: string) => {
+    try {
+      const { message } = await bookmarkPostApi(id);
       router.refresh();
       toast.success(message);
     } catch (err: any) {
@@ -129,6 +140,7 @@ const PostAction = ({ post }: { post: BlogPost }) => {
         {/* Bookmark */}
         <IconButton
           size="small"
+          onClick={() => handleBookmark(post.id)}
           sx={{
             width: 29,
             height: 29,
@@ -144,7 +156,11 @@ const PostAction = ({ post }: { post: BlogPost }) => {
             },
           }}
         >
-          <BookmarkBorderRounded className="bookmark-icon" fontSize="small" />
+          {post.isBookmarked ? (
+            <Bookmark className="bookmark-icon" fontSize="small" />
+          ) : (
+            <BookmarkBorderRounded className="bookmark-icon" fontSize="small" />
+          )}
         </IconButton>
       </Stack>
     </>
