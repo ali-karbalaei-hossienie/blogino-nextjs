@@ -18,6 +18,7 @@ import PostActions from "./components/PostActions";
 import StatRow from "./components/StatRow";
 import { cookies } from "next/headers";
 import setCookiesOnReq from "@/utils/setCookiesOnRequest";
+import RelatedPosts from "./components/RelatedPost";
 
 interface PostPageProps {
   params: Promise<{
@@ -229,6 +230,8 @@ const PostPage = async ({ params }: PostPageProps) => {
                 Article Content
             ===================================== */}
             <ArticleContent post={post} />
+
+            <RelatedPosts posts={post.related} />
           </Box>
 
           {/* =======================================

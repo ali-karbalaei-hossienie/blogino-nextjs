@@ -66,7 +66,7 @@ export interface BlogPost {
 
   author: User;
 
-  related: string[];
+  related: BlogPost[];
 
   createdAt: string;
   updatedAt: string;
