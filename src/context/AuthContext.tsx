@@ -197,5 +197,5 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) throw new Error("not found Auth context");
-  return useContext(AuthContext);
+  return context;
 }

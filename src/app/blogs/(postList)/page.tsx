@@ -1,12 +1,19 @@
 import { Grid } from "@mui/material";
 import { BlogPost } from "../../types";
-import PostCard from "../components/Posts/PostCard";
+import PostCard from "./components/Posts/PostCard";
+import setCookiesOnReq from "@/utils/setCookiesOnRequest";
+import { cookies } from "next/headers";
 
 const BlogPage = async () => {
   let posts: BlogPost[] = [];
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/list`);
+    const cookieStore = await cookies();
+    const options = setCookiesOnReq(cookieStore);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/post/list`,
+      options,
+    );
 
     if (!res.ok) {
       throw new Error(`Failed to fetch categories: ${res.status}`);
@@ -15,13 +22,12 @@ const BlogPage = async () => {
     const response = await res.json();
 
     posts = response.data.posts;
-
-    console.log(response);
   } catch (error) {
     console.error("Error fetching categories:", error);
 
     return <div>خطا در دیافت دیتاها</div>;
   }
+
   return (
     <>
       <Grid container spacing={2}>

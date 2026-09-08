@@ -1,13 +1,31 @@
+"use client";
+
 import { BlogPost } from "@/app/types";
+import { likePostApi } from "@/services/postServices";
+import { toPersianDigits } from "@/utils/toPersianDigits";
 import {
   BookmarkBorderRounded,
   ChatBubbleOutlineRounded,
   FavoriteBorderRounded,
 } from "@mui/icons-material";
 
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { IconButton, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const PostAction = ({ post }: { post: BlogPost }) => {
+  const router = useRouter();
+  const handleLikePost = async (id: string) => {
+    try {
+      const { message } = await likePostApi(id);
+      router.refresh();
+      toast.success(message);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
+
   return (
     <>
       <Stack
@@ -55,7 +73,7 @@ const PostAction = ({ post }: { post: BlogPost }) => {
               pr: 0.5,
             }}
           >
-            {post.commentsCount}
+            {toPersianDigits(post.commentsCount)}
           </Typography>
         </Stack>
         {/* Like */}
@@ -77,6 +95,7 @@ const PostAction = ({ post }: { post: BlogPost }) => {
           }}
         >
           <IconButton
+            onClick={() => handleLikePost(post.id)}
             className="like-icon"
             size="small"
             sx={{
@@ -87,7 +106,11 @@ const PostAction = ({ post }: { post: BlogPost }) => {
               padding: 2.5,
             }}
           >
-            <FavoriteBorderRounded fontSize="small" />
+            {post.isLiked ? (
+              <FavoriteIcon fontSize="small" />
+            ) : (
+              <FavoriteBorderRounded fontSize="small" />
+            )}
             <Typography
               className="like-count"
               sx={{
@@ -98,7 +121,7 @@ const PostAction = ({ post }: { post: BlogPost }) => {
                 lineHeight: 0,
               }}
             >
-              {post.likesCount}
+              {toPersianDigits(post.likesCount)}
             </Typography>
           </IconButton>
         </Stack>

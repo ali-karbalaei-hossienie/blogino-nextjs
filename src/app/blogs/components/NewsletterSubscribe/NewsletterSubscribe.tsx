@@ -1,16 +1,21 @@
 "use client";
+
 import { Box, Typography, Button, useTheme, Avatar } from "@mui/material";
+
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SendOutlined from "@mui/icons-material/SendOutlined";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
-import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { toPersianDigits } from "@/utils/toPersianDigits";
 
 const NewsletterSubscribe = () => {
   const theme = useTheme();
   const router = useRouter();
+
   const { user, logout } = useAuth();
 
   const handleLogout = () => {
@@ -21,7 +26,7 @@ const NewsletterSubscribe = () => {
     <Box
       sx={{
         width: "100%",
-        p: 3,
+        p: 2.5,
         borderRadius: 3,
         position: "relative",
         overflow: "hidden",
@@ -30,102 +35,141 @@ const NewsletterSubscribe = () => {
     >
       {user ? (
         <>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2 }}>
+          {/* User */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              mb: 2,
+            }}
+          >
             <Avatar
               src={user.avatarUrl || undefined}
               sx={{
-                width: 40,
-                height: 40,
+                width: 42,
+                height: 42,
                 bgcolor: "primary.main",
                 color: "primary.contrastText",
                 fontSize: 15,
                 fontWeight: 700,
               }}
             >
-              {user.name?.charAt(0)}
+              {toPersianDigits(user.name?.charAt(0))}
             </Avatar>
-            <Box>
+
+            <Box sx={{ minWidth: 0 }}>
               <Typography
-                sx={{ fontSize: 14, fontWeight: 700, color: "text.primary" }}
+                sx={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "text.primary",
+                }}
               >
                 سلام، {user.name}
               </Typography>
-              <Typography sx={{ fontSize: 12, color: "primary.200" }}>
-                خوش اومدی
+
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  color: "text.secondary",
+                  mt: 0.3,
+                }}
+              >
+                خوش اومدی 👋
               </Typography>
             </Box>
           </Box>
 
-          <Box sx={{ display: "flex", gap: 1, mb: 1.5 }}>
+          {/* Profile */}
+          <Button
+            fullWidth
+            variant="contained"
+            startIcon={<PersonRoundedIcon sx={{ fontSize: 18 }} />}
+            onClick={() => router.push("/profile")}
+            sx={{
+              mb: 1,
+              py: 1,
+              borderRadius: 2,
+              fontSize: 13,
+              fontWeight: 700,
+              textTransform: "none",
+              boxShadow: "none",
+
+              background: `linear-gradient(
+                90deg,
+                ${theme.palette.primary[600]} 10%,
+                ${theme.palette.primary[900]} 100%
+              )`,
+
+              "&:hover": {
+                boxShadow: "none",
+                background: `linear-gradient(
+                  90deg,
+                  ${theme.palette.primary[700]} 10%,
+                  ${theme.palette.primary[900]} 100%
+                )`,
+              },
+            }}
+          >
+            مشاهده پروفایل
+          </Button>
+
+          {/* Bookmarks */}
+          <Box
+            onClick={() => router.push("/bookmarks")}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.2,
+              width: "100%",
+              py: 1.1,
+              px: 1.2,
+              mb: 1.2,
+
+              borderRadius: 2,
+              backgroundColor: "background.paper",
+
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+
+              "&:hover": {
+                backgroundColor: "action.hover",
+                transform: "translateY(-1px)",
+              },
+            }}
+          >
             <Box
-              onClick={() => router.push("/bookmarks")}
               sx={{
-                flex: 1,
+                width: 32,
+                height: 32,
+                flexShrink: 0,
+
                 display: "flex",
                 alignItems: "center",
-                gap: 0.8,
-                borderRadius: 2,
-                py: 1,
-                px: 1.2,
-                backgroundColor: "action.hover",
-                cursor: "pointer",
+                justifyContent: "center",
+
+                borderRadius: 1.5,
+
+                backgroundColor: "secondary.200",
+                color: "primary.main",
               }}
             >
-              <BookmarkBorderRoundedIcon
-                sx={{ fontSize: 18, color: "primary.main" }}
-              />
-              <Box>
-                <Typography
-                  sx={{
-                    fontSize: 13,
-                    fontWeight: 700,
-                    color: "text.primary",
-                    lineHeight: 1,
-                  }}
-                >
-                  {user.likedPosts.length}
-                </Typography>
-                <Typography sx={{ fontSize: 10.5, color: "text.secondary" }}>
-                  ذخیره‌شده
-                </Typography>
-              </Box>
+              <BookmarkBorderRoundedIcon sx={{ fontSize: 18 }} />
             </Box>
 
-            <Box
-              onClick={() => router.push("/liked")}
+            <Typography
               sx={{
-                flex: 1,
-                display: "flex",
-                alignItems: "center",
-                gap: 0.8,
-                borderRadius: 2,
-                py: 1,
-                px: 1.2,
-                backgroundColor: "action.hover",
-                cursor: "pointer",
+                fontSize: 12.5,
+                fontWeight: 700,
+                color: "text.primary",
               }}
             >
-              <FavoriteBorderRoundedIcon
-                sx={{ fontSize: 18, color: "primary.main" }}
-              />
-              <Box>
-                <Typography
-                  sx={{
-                    fontSize: 13,
-                    fontWeight: 700,
-                    color: "text.primary",
-                    lineHeight: 1,
-                  }}
-                >
-                  {user.likedPosts?.length ?? 0}
-                </Typography>
-                <Typography sx={{ fontSize: 10.5, color: "text.secondary" }}>
-                  لایک‌شده
-                </Typography>
-              </Box>
-            </Box>
+              پست‌های ذخیره‌شده
+            </Typography>
           </Box>
 
+          {/* Logout */}
           <Button
             fullWidth
             variant="outlined"
@@ -133,10 +177,11 @@ const NewsletterSubscribe = () => {
             startIcon={<LogoutRoundedIcon sx={{ fontSize: 16 }} />}
             onClick={handleLogout}
             sx={{
-              fontSize: 12.5,
-              textTransform: "none",
-              borderRadius: 2,
               py: 0.8,
+              borderRadius: 2,
+              fontSize: 12,
+              fontWeight: 600,
+              textTransform: "none",
             }}
           >
             خروج از حساب
@@ -144,29 +189,47 @@ const NewsletterSubscribe = () => {
         </>
       ) : (
         <>
-          <Box sx={{ display: "flex", alignItems: "center", mb: 1.5, gap: 2 }}>
+          {/* Newsletter Header */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mb: 1.5,
+              gap: 2,
+            }}
+          >
             <Box
               sx={{
                 width: 34,
                 height: 34,
+
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+
                 borderRadius: 2,
+
                 backgroundColor: "primary.main",
                 color: "primary.contrastText",
+
                 flexShrink: 0,
               }}
             >
               <LockRoundedIcon sx={{ fontSize: 18 }} />
             </Box>
+
             <Typography
-              sx={{ fontSize: 15, fontWeight: 800, color: "text.primary" }}
+              sx={{
+                fontSize: 15,
+                fontWeight: 800,
+                color: "text.primary",
+              }}
             >
               عضویت در خبرنامه
             </Typography>
           </Box>
 
+          {/* Description */}
           <Typography
             sx={{
               fontSize: 12.5,
@@ -178,22 +241,34 @@ const NewsletterSubscribe = () => {
             برای دریافت جدیدترین مقالات در خبرنامه‌ی ما عضو شوید.
           </Typography>
 
+          {/* Sign Up */}
           <Button
             onClick={() => router.push("/signin")}
             fullWidth
             startIcon={
               <SendOutlined
-                sx={{ fontSize: 18, transform: "rotate(321deg)" }}
+                sx={{
+                  fontSize: 18,
+                  transform: "rotate(321deg)",
+                }}
               />
             }
             sx={{
-              background: `linear-gradient(90deg, ${theme.palette.primary[600]} 10%, ${theme.palette.primary[900]} 100%)`,
+              background: `linear-gradient(
+                90deg,
+                ${theme.palette.primary[600]} 10%,
+                ${theme.palette.primary[900]} 100%
+              )`,
+
               color: "primary.contrastText",
               fontWeight: 700,
               fontSize: 13.5,
+
               borderRadius: 2,
               py: 1,
+
               textTransform: "none",
+
               "&:hover": {
                 backgroundColor: "primary.dark",
               },
