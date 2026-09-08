@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${vazirFont.variable} font-sans`}>
         <AuthProvider>
           <ThemeRegistry>
-            <Toaster position="top-center" />
+            <Toaster richColors position="top-center" />
 
             <Header />
             {children}
