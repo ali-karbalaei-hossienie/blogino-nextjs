@@ -5,9 +5,10 @@ import { Box, Button, Stack } from "@mui/material";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Favorite from "@mui/icons-material/Favorite";
 
 import { BlogPost } from "@/app/types";
-import { bookmarkPostApi } from "@/services/postServices";
+import { bookmarkPostApi, likePostApi } from "@/services/postServices";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -22,7 +23,15 @@ const PostActions = ({ post }: { post: BlogPost }) => {
       toast.error(err?.response?.data?.message);
     }
   };
-
+  const handleLikePost = async (id: string) => {
+    try {
+      const { message } = await likePostApi(id);
+      router.refresh();
+      toast.success(message);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
   return (
     <Box
       sx={{
@@ -47,15 +56,20 @@ const PostActions = ({ post }: { post: BlogPost }) => {
       >
         {/* Like */}
         <Button
+          onClick={() => handleLikePost(post.id)}
           disableRipple
           startIcon={
-            <FavoriteBorderIcon
-              sx={{
-                color: "primary.500",
-                width: 22,
-                height: 22,
-              }}
-            />
+            post.isLiked ? (
+              <Favorite sx={{ color: "primary.main" }} />
+            ) : (
+              <FavoriteBorderIcon
+                sx={{
+                  color: "primary.500",
+                  width: 22,
+                  height: 22,
+                }}
+              />
+            )
           }
           sx={{
             minWidth: 88,
