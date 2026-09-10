@@ -20,11 +20,11 @@ export interface MenuItemsType {
 }
 
 const menuItems: MenuItemsType[] = [
-  { text: "داشبورد", icon: <DashboardIcon />, href: "/admin" },
-  { text: "پست ها", icon: <ArticleIcon />, href: "/admin/posts" },
-  { text: "نظرات", icon: <CommentIcon />, href: "/admin/comments" },
-  { text: "دسته بندی ها", icon: <CategoryIcon />, href: "/admin/categories" },
-  { text: "کاربران", icon: <PeopleIcon />, href: "/admin/users" },
+  { text: "داشبورد", icon: <DashboardIcon />, href: "/profile" },
+  { text: "پست ها", icon: <ArticleIcon />, href: "/profile/posts" },
+  { text: "نظرات", icon: <CommentIcon />, href: "/profile/comments" },
+  { text: "دسته بندی ها", icon: <CategoryIcon />, href: "/profile/categories" },
+  { text: "کاربران", icon: <PeopleIcon />, href: "/profile/users" },
 ];
 
 const Panel = () => {
