@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { Suspense } from "react";
 import CardWrapper from "./_/components/CardWrapper";
 import CardsSkeleton from "./_/components/CardsSkeleton";
+import LatestPosts from "./_/components/LatestPosts";
 
 const Profile = () => {
   return (
@@ -21,6 +22,24 @@ const Profile = () => {
       <Suspense fallback={<CardsSkeleton />}>
         <CardWrapper />
       </Suspense>
+      <div>
+        <Typography
+          variant="h5"
+          component="h1"
+          sx={{
+            fontWeight: 700,
+            mb: 3,
+            mt: 3,
+            fontSize: "1.25rem",
+            color: "#e2e8f0",
+          }}
+        >
+          آخرین پست ها
+        </Typography>
+        <Suspense>
+          <LatestPosts />
+        </Suspense>
+      </div>
     </Box>
   );
 };
