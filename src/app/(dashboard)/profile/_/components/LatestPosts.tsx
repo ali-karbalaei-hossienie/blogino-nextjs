@@ -13,6 +13,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import PostRowActions from "./PostRowActions";
 
 const LatestPosts = async () => {
   const { posts } = await getAllPostsApi();
@@ -25,13 +26,15 @@ const LatestPosts = async () => {
         border: "1px solid",
         borderColor: "divider",
         borderRadius: 3,
+        overflowX: "auto",
         overflowY: "hidden",
         maxWidth: "100%",
+        WebkitOverflowScrolling: "touch",
       }}
     >
       <Table
         sx={{
-          minWidth: 650,
+          minWidth: 750,
         }}
       >
         <TableHead>
@@ -51,7 +54,7 @@ const LatestPosts = async () => {
 
             <TableCell
               sx={{
-                width: "18%",
+                width: "16%",
                 fontWeight: 700,
               }}
             >
@@ -70,7 +73,7 @@ const LatestPosts = async () => {
             <TableCell
               align="center"
               sx={{
-                width: "11%",
+                width: "10%",
                 fontWeight: 700,
               }}
             >
@@ -79,11 +82,21 @@ const LatestPosts = async () => {
 
             <TableCell
               sx={{
-                width: "20%",
+                width: "5%",
                 fontWeight: 700,
               }}
             >
               آخرین بروزرسانی
+            </TableCell>
+
+            <TableCell
+              align="center"
+              sx={{
+                width: "12%",
+                fontWeight: 700,
+              }}
+            >
+              عملیات
             </TableCell>
           </TableRow>
         </TableHead>
@@ -165,13 +178,18 @@ const LatestPosts = async () => {
                   </Typography>
                 </Box>
               </TableCell>
+
+              {/* Actions */}
+              <TableCell align="center">
+                <PostRowActions postId={post._id} />
+              </TableCell>
             </TableRow>
           ))}
 
           {posts.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={5}
+                colSpan={6}
                 align="center"
                 sx={{
                   py: 6,
