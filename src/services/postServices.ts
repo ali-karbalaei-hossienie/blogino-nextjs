@@ -1,3 +1,4 @@
+import { BlogPost } from "@/app/types";
 import http from "./httpServices";
 
 export async function likePostApi(id: string) {
@@ -8,7 +9,10 @@ export async function bookmarkPostApi(id: string) {
   return http.post(`/post/bookmark/${id}`).then(({ data }) => data.data);
 }
 
-export async function getAllPostsApi(queries = {}, options = {}) {
+export async function getAllPostsApi(
+  queries = {},
+  options = {},
+): Promise<{ message: string; posts: BlogPost[] }> {
   // Artificially delay a response for demo purposes.
   // Don't do this in production :)
 
