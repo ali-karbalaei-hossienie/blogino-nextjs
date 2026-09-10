@@ -17,3 +17,7 @@ export async function getUserApi() {
 export function logoutApi() {
   return http.post(`/user/logout`);
 }
+
+export async function getAllUsersApi(options: any) {
+  return http.get(`/user/list`, options).then(({ data }) => data.data);
+}

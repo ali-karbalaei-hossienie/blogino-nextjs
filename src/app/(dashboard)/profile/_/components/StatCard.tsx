@@ -35,22 +35,12 @@ export const StatCard: React.FC<StatCardProps> = ({
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "flex-start",
           gap: 1,
           px: 0.5,
           color: "text.secondary",
         }}
       >
-        <Typography
-          variant="body2"
-          sx={{
-            fontSize: "0.875rem",
-            fontWeight: 600,
-          }}
-        >
-          {title}
-        </Typography>
-
         <Box
           sx={{
             display: "flex",
@@ -62,6 +52,15 @@ export const StatCard: React.FC<StatCardProps> = ({
         >
           {icon}
         </Box>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: "0.875rem",
+            fontWeight: 600,
+          }}
+        >
+          {title}
+        </Typography>
       </Box>
 
       <Box
