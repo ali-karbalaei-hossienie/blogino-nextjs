@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
-import { BlogPost } from "../../types";
 import PostCard from "./components/Posts/PostCard";
 import setCookiesOnReq from "@/utils/setCookiesOnRequest";
 import { cookies } from "next/headers";
 import PostFilter from "./components/PostFilter/PostFilter";
+import { BlogPost } from "@/app/types";
 
 export const dynamic = "force-dynamic";
 

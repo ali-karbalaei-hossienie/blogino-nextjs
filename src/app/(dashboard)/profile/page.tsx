@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import CardWrapper from "./_/components/CardWrapper";
 import CardsSkeleton from "./_/components/CardsSkeleton";
 import LatestPosts from "./_/components/LatestPosts";
+import LatestPostsSkeleton from "./_/components/LatestPostsSkeleton";
 
 const Profile = () => {
   return (
@@ -36,7 +37,7 @@ const Profile = () => {
         >
           آخرین پست ها
         </Typography>
-        <Suspense>
+        <Suspense fallback={<LatestPostsSkeleton />}>
           <LatestPosts />
         </Suspense>
       </div>
