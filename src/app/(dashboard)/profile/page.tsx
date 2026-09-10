@@ -6,7 +6,7 @@ import LatestPosts from "./_/components/LatestPosts";
 
 const Profile = () => {
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", minWidth: 0 }}>
       <Typography
         variant="h5"
         component="h1"

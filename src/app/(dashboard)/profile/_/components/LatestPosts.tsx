@@ -25,13 +25,13 @@ const LatestPosts = async () => {
         border: "1px solid",
         borderColor: "divider",
         borderRadius: 3,
-        overflow: "hidden",
+        overflowY: "hidden",
+        maxWidth: "100%",
       }}
     >
       <Table
         sx={{
-          minWidth: 750,
-          tableLayout: "fixed",
+          minWidth: 650,
         }}
       >
         <TableHead>

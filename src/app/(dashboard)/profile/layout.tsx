@@ -16,6 +16,8 @@ export default function AdminLayout({
         component="main"
         sx={{
           flexGrow: 1,
+          minWidth: 0,
+
           p: { xs: 2, md: 3 },
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
           minHeight: "100vh",
