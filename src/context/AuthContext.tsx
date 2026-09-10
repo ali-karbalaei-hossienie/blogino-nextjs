@@ -82,7 +82,7 @@ const authReducer = (state: AuthState, action: any): AuthState => {
         user: null,
         isAuthenticated: false,
         error: action.payload,
-        isLoading: true,
+        isLoading: false,
       };
     }
     case "user/loaded":
@@ -122,7 +122,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
       dispatch({ type: "signup", payload: user });
       toast.success(message);
-      // router.push("/profile");
+      router.push("/profile");
     } catch (err: any) {
       const error = err?.response?.data?.message;
       dispatch({ type: "rejected", payload: error });
@@ -140,7 +140,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
       dispatch({ type: "signin", payload: user });
       toast.success(message);
-      // router.push("/profile");
+      router.push("/profile");
     } catch (err: any) {
       const error = err?.response?.data?.message;
       dispatch({ type: "rejected", payload: error });

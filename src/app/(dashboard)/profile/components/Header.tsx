@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import {
   AppBar,
@@ -9,7 +10,17 @@ import {
 } from "@mui/material";
 
 const DRAWER_WIDTH = 260;
+
 const Header = ({ handleDrawerToggle }: { handleDrawerToggle: () => void }) => {
+  const { user } = useAuth();
+
+  const avatarSrc = user?.avatarUrl || user?.avatar || undefined;
+
+  const userInitial = (user?.name || user?.email || "?")
+    .trim()
+    .charAt(0)
+    .toUpperCase();
+
   return (
     <AppBar
       position="fixed"
@@ -40,6 +51,8 @@ const Header = ({ handleDrawerToggle }: { handleDrawerToggle: () => void }) => {
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Avatar
+            src={avatarSrc}
+            alt={user?.name || "User"}
             sx={{
               width: 34,
               height: 34,
@@ -47,7 +60,7 @@ const Header = ({ handleDrawerToggle }: { handleDrawerToggle: () => void }) => {
               fontSize: "0.85rem",
             }}
           >
-            ع
+            {userInitial}
           </Avatar>
         </Box>
       </Toolbar>

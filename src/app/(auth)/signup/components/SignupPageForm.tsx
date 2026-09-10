@@ -10,17 +10,17 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
+import { useAuth } from "@/context/AuthContext";
+import { authTpe } from "@/services/types";
+import { useRouter } from "next/navigation";
 import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
 import { signupSchema, SignupValues } from "../../lib/authSchemas";
-import { signupApi } from "@/services/authServices";
-import { authTpe } from "@/services/types";
-import { useAuth } from "@/context/AuthContext";
 
 export default function SignupPageForm() {
   const { signup } = useAuth();
+  const router = useRouter();
   const {
     register,
     control,
@@ -42,6 +42,7 @@ export default function SignupPageForm() {
       name: values.name,
       password: values.password,
     });
+    router.push("/profile");
   };
 
   return (
