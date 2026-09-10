@@ -4,7 +4,10 @@ import CardWrapper from "./_/components/CardWrapper";
 import CardsSkeleton from "./_/components/CardsSkeleton";
 import LatestPosts from "./_/components/LatestPosts";
 import LatestPostsSkeleton from "./_/components/LatestPostsSkeleton";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "پروفایل",
+};
 const Profile = () => {
   return (
     <Box sx={{ width: "100%", minWidth: 0 }}>

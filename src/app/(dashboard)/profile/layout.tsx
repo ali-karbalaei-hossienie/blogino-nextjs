@@ -1,6 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import React from "react";
 import Panel from "./_/components/Panel";
+import { Metadata } from "next";
 
 export const DRAWER_WIDTH = 260;
 

@@ -23,3 +23,11 @@ export async function getAllPostsApi(
     .get(`/post/list?${queries}`, options)
     .then(({ data }) => data.data);
 }
+
+export async function getPostById(id: string) {
+  return http.get(`/post/${id}`).then(({ data }) => data);
+}
+
+export async function editPostApi({ id, data }: { id: string; data: any }) {
+  return http.patch(`/post/update/${id}`, data).then(({ data }) => data.data);
+}
