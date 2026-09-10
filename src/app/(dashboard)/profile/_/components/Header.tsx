@@ -13,7 +13,6 @@ const DRAWER_WIDTH = 260;
 
 const Header = ({ handleDrawerToggle }: { handleDrawerToggle: () => void }) => {
   const { user } = useAuth();
-  console.log(user);
 
   const avatarSrc = user?.avatarUrl || user?.avatar || undefined;
 
