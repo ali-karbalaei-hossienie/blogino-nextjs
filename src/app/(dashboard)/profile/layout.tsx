@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Toolbar } from "@mui/material";
 import React from "react";
 import Panel from "./components/Panel";

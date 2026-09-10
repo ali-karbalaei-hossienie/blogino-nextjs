@@ -3,12 +3,10 @@ import {
   AppBar,
   Avatar,
   Box,
-  Drawer,
   IconButton,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 
 const DRAWER_WIDTH = 260;
 const Header = ({ handleDrawerToggle }: { handleDrawerToggle: () => void }) => {
