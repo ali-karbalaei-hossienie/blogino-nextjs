@@ -9,7 +9,7 @@ import {
 } from "@mui/icons-material";
 import { Drawer } from "@mui/material";
 import { JSX, useState } from "react";
-import { DRAWER_WIDTH } from "../layout";
+import { DRAWER_WIDTH } from "../../layout";
 import DrawerContent from "./DrawerContent";
 import Header from "./Header";
 

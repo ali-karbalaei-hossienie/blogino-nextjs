@@ -1,6 +1,6 @@
 import { Box, Toolbar } from "@mui/material";
 import React from "react";
-import Panel from "./components/Panel";
+import Panel from "./_/components/Panel";
 
 export const DRAWER_WIDTH = 260;
 
@@ -18,7 +18,6 @@ export default function AdminLayout({
           flexGrow: 1,
           p: { xs: 2, md: 3 },
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
-          marginRight: { md: `${DRAWER_WIDTH}px` },
           minHeight: "100vh",
           bgcolor: "background.default",
         }}
