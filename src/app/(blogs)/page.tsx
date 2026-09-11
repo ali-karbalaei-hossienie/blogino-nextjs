@@ -1,10 +1,10 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "خانه |  بلاگینو ",
-};
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+
 export default function HomePage() {
+  const router = useRouter();
   return (
     <>
       <Container
@@ -49,6 +49,7 @@ export default function HomePage() {
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <Button
+            onClick={() => router.push("/blogs")}
             variant="outlined"
             sx={{
               borderRadius: "8px",
@@ -61,6 +62,7 @@ export default function HomePage() {
             مطالعه بلاگ ها
           </Button>
           <Button
+            onClick={() => router.push("/profile")}
             variant="contained"
             sx={{
               borderRadius: "8px",
