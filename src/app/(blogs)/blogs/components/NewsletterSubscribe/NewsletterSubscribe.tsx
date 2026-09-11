@@ -24,7 +24,6 @@ const NewsletterSubscribe = () => {
   const router = useRouter();
 
   const { user, logout, isLoading } = useAuth();
-  console.log(user, isLoading);
 
   const handleLogout = () => {
     logout();

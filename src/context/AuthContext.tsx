@@ -1,6 +1,5 @@
 "use client";
 import { LoginValues } from "@/app/(auth)/lib/authSchemas";
-import { User } from "@/app/types";
 import {
   getUserApi,
   logoutApi,
