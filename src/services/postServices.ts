@@ -28,6 +28,16 @@ export async function getPostById(id: string) {
   return http.get(`/post/${id}`).then(({ data }) => data);
 }
 
-export async function editPostApi({ id, data }: { id: string; data: any }) {
+export async function editPostApi({ id, data }: { id: string; data }) {
   return http.patch(`/post/update/${id}`, data).then(({ data }) => data.data);
+}
+
+export async function deletePostApi(id: string, options = {}) {
+  return http
+    .delete(`/post/remove/${id}`, options)
+    .then(({ data }) => data.data);
+}
+
+export async function createPostApi(data) {
+  return http.post(`/post/create`, data).then(({ data }) => data.data);
 }
