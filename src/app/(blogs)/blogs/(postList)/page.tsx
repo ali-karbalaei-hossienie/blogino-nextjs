@@ -70,7 +70,6 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         </Grid>
       )}
 
-      {/* کامپوننت صفحه‌بندی */}
       <Grid size={{ xs: 12 }}>
         <PaginationControl totalPages={totalPages} currentPage={page} />
       </Grid>
