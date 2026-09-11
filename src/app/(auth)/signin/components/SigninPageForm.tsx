@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
 import { loginSchema, LoginValues } from "../../lib/authSchemas";
-import { useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "ورود",
@@ -23,7 +22,6 @@ export const metadata: Metadata = {
 };
 export default function SigninPageForm() {
   const { signin } = useAuth();
-  const router = useRouter();
 
   const {
     register,
