@@ -143,6 +143,3 @@ export const getAppTheme = (mode: "light" | "dark" = "light") => {
     },
   });
 };
-
-const theme: Theme = getAppTheme("dark");
-export default theme;

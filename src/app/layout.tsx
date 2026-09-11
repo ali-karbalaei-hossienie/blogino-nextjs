@@ -1,10 +1,10 @@
 // src/app/layout.tsx
-import type { Metadata } from "next";
-import ThemeRegistry from "../components/ThemeRegistry";
 import vazirFont from "@/constants/localFont";
-import Header from "@/components/Header";
-import { Toaster } from "sonner";
 import AuthProvider from "@/context/AuthContext";
+import type { Metadata } from "next";
+import { Toaster } from "sonner";
+import ThemeRegistry from "../components/ThemeRegistry";
+import StoreProvider from "./StoreProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -23,12 +23,14 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className={`${vazirFont.variable} font-sans`}>
-        <AuthProvider>
-          <ThemeRegistry>
-            <Toaster richColors position="top-center" />
-            {children}
-          </ThemeRegistry>
-        </AuthProvider>
+        <StoreProvider>
+          <AuthProvider>
+            <ThemeRegistry>
+              <Toaster richColors position="top-center" />
+              {children}
+            </ThemeRegistry>
+          </AuthProvider>
+        </StoreProvider>
       </body>
     </html>
   );
