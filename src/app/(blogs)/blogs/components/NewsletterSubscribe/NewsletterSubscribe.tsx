@@ -193,54 +193,6 @@ const NewsletterSubscribe = () => {
             مشاهده پروفایل
           </Button>
 
-          {/* Bookmarks */}
-          <Box
-            onClick={() => router.push("/bookmarks")}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.2,
-              width: "100%",
-              py: 1.1,
-              px: 1.2,
-              mb: 1.2,
-              borderRadius: 2,
-              backgroundColor: "background.paper",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                backgroundColor: "action.hover",
-                transform: "translateY(-1px)",
-              },
-            }}
-          >
-            <Box
-              sx={{
-                width: 32,
-                height: 32,
-                flexShrink: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 1.5,
-                backgroundColor: "secondary.200",
-                color: "primary.main",
-              }}
-            >
-              <BookmarkBorderRoundedIcon sx={{ fontSize: 18 }} />
-            </Box>
-
-            <Typography
-              sx={{
-                fontSize: 12.5,
-                fontWeight: 700,
-                color: "text.primary",
-              }}
-            >
-              پست‌های ذخیره‌شده
-            </Typography>
-          </Box>
-
           {/* Logout */}
           <Button
             fullWidth
