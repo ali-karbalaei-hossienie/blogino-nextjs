@@ -1,32 +1,43 @@
 "use client";
 
-import React from "react";
+import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
-  Typography,
-  TextField,
-  InputAdornment,
   Button,
+  InputAdornment,
+  TextField,
+  Typography,
   useTheme,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useState } from "react";
 
-interface PostListHeaderProps {
-  searchTerm?: string;
-  onSearchChange?: (value: string) => void;
-}
-
-export const PostListHeader: React.FC<PostListHeaderProps> = ({
-  searchTerm = "",
-  onSearchChange,
-}) => {
+export const PostListHeader = () => {
   const theme = useTheme();
   const router = useRouter();
   const onCreatePost = () => {
     router.push("posts/create");
   };
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [inputValue, setInputValue] = useState(
+    searchParams.get("search")?.toString() || "",
+  );
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const params = new URLSearchParams(searchParams.toString());
+    const query = inputValue.trim();
+
+    if (query) {
+      params.set("search", query);
+    } else {
+      params.delete("search");
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <Box
       sx={{
@@ -52,35 +63,37 @@ export const PostListHeader: React.FC<PostListHeaderProps> = ({
         لیست پست ها
       </Typography>
 
-      <TextField
-        value={searchTerm}
-        onChange={(e) => onSearchChange?.(e.target.value)}
-        placeholder="جستجو ..."
-        size="small"
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: theme.palette.secondary.main }} />
-              </InputAdornment>
-            ),
-          },
-        }}
-        sx={{
-          flexGrow: 1,
-          maxWidth: 400,
-          "& .MuiOutlinedInput-root": {
-            backgroundColor: theme.palette.background.default,
-            borderRadius: 2,
-            "& fieldset": {
-              borderColor: theme.palette.secondary.dark,
+      <Box component="form" onSubmit={handleSubmit}>
+        <TextField
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="جستجو ..."
+          size="small"
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: theme.palette.secondary.main }} />
+                </InputAdornment>
+              ),
             },
-            "&:hover fieldset": {
-              borderColor: theme.palette.secondary.main,
+          }}
+          sx={{
+            flexGrow: 1,
+            maxWidth: 400,
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: theme.palette.background.default,
+              borderRadius: 2,
+              "& fieldset": {
+                borderColor: theme.palette.secondary.dark,
+              },
+              "&:hover fieldset": {
+                borderColor: theme.palette.secondary.main,
+              },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </Box>
       <Button
         variant="contained"
         startIcon={<AddIcon />}

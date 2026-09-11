@@ -25,7 +25,6 @@ const Search = () => {
 
     const params = new URLSearchParams(searchParams.toString());
     const query = inputValue.trim();
-    console.log(query);
 
     if (query) {
       params.set("search", query);

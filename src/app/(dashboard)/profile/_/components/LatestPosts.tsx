@@ -14,10 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import PostRowActions from "./PostRowActions";
+import { BlogPost } from "@/app/types";
 
-const LatestPosts = async () => {
-  const { posts } = await getAllPostsApi();
-
+const LatestPosts = ({ posts }: { posts: BlogPost[] }) => {
   return (
     <TableContainer
       component={Paper}

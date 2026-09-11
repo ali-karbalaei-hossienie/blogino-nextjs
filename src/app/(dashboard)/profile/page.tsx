@@ -5,10 +5,13 @@ import CardsSkeleton from "./_/components/CardsSkeleton";
 import LatestPosts from "./_/components/LatestPosts";
 import LatestPostsSkeleton from "./_/components/LatestPostsSkeleton";
 import { Metadata } from "next";
+import { getAllPostsApi } from "@/services/postServices";
 export const metadata: Metadata = {
   title: "پروفایل",
 };
-const Profile = () => {
+const Profile = async () => {
+  const { posts } = await getAllPostsApi();
+
   return (
     <Box sx={{ width: "100%", minWidth: 0 }}>
       <Typography
@@ -41,7 +44,7 @@ const Profile = () => {
           آخرین پست ها
         </Typography>
         <Suspense fallback={<LatestPostsSkeleton />}>
-          <LatestPosts />
+          <LatestPosts posts={posts} />
         </Suspense>
       </div>
     </Box>
