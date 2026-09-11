@@ -1,13 +1,7 @@
-import {
-  Breadcrumbs,
-  Container,
-  Link as MuiLink,
-  Typography,
-} from "@mui/material";
-import { notFound } from "next/navigation";
-import { getPostById } from "@/services/postServices";
-import Link from "next/link";
 import { getCategoryApi } from "@/services/categoryList";
+import { getPostById } from "@/services/postServices";
+import { Breadcrumbs, Container, Typography } from "@mui/material";
+import { notFound } from "next/navigation";
 import EditPostForm from "../components/EditPostForm";
 
 interface PageProps {
