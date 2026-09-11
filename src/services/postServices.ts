@@ -28,7 +28,7 @@ export async function getPostById(id: string) {
   return http.get(`/post/${id}`).then(({ data }) => data);
 }
 
-export async function editPostApi({ id, data }: { id: string; data }) {
+export async function editPostApi({ id, data }: { id: string; data: any }) {
   return http.patch(`/post/update/${id}`, data).then(({ data }) => data.data);
 }
 
@@ -38,6 +38,6 @@ export async function deletePostApi(id: string, options = {}) {
     .then(({ data }) => data.data);
 }
 
-export async function createPostApi(data) {
+export async function createPostApi(data: any) {
   return http.post(`/post/create`, data).then(({ data }) => data.data);
 }
