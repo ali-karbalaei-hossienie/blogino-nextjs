@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -10,50 +11,52 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-
-import { useAuth } from "@/context/AuthContext";
-import { authTpe } from "@/services/types";
-import { useRouter } from "next/navigation";
 import Layout from "../../Layout";
 import PasswordField from "../../components/PasswordField";
-import { signupSchema, SignupValues } from "../../lib/authSchemas";
+import { loginSchema, LoginValues } from "../../lib/authSchemas";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SignupPageForm() {
-  const { signup } = useAuth();
+export default function SigninPageForm() {
+  const { signin } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignupValues>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+  } = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (values: authTpe) => {
-    await signup({
-      email: values.email,
-      name: values.name,
-      password: values.password,
-    });
-    router.push("/profile");
+  const onSubmit = async (values: LoginValues) => {
+    try {
+      await signin({
+        email: values.email,
+        password: values.password,
+      });
+      router.push(callbackUrl);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
     <Layout
-      title="ثبت‌نام"
-      subtitle="برای شروع یک حساب کاربری بسازید"
+      title="ورود"
+      subtitle="برای ادامه وارد حساب کاربری‌تان شوید"
       footer={
         <>
-          قبلاً حساب ساخته‌اید؟{" "}
-          <MuiLink component={Link} href="/signin">
-            وارد شوید
+          حساب کاربری ندارید؟{" "}
+          <MuiLink
+            component={Link}
+            href={`/signup${callbackUrl !== "/" ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`}
+          >
+            ثبت‌نام کنید
           </MuiLink>
         </>
       }
@@ -65,15 +68,6 @@ export default function SignupPageForm() {
         noValidate
       >
         <TextField
-          label="نام و نام خانوادگی"
-          autoComplete="name"
-          fullWidth
-          error={!!errors.name}
-          helperText={errors.name?.message}
-          {...register("name")}
-        />
-
-        <TextField
           label="ایمیل"
           type="email"
           autoComplete="email"
@@ -83,19 +77,7 @@ export default function SignupPageForm() {
           {...register("email")}
         />
 
-        <PasswordField
-          name="password"
-          control={control}
-          label="رمز عبور"
-          autoComplete="new-password"
-        />
-
-        <PasswordField
-          name="confirmPassword"
-          control={control}
-          label="تکرار رمز عبور"
-          autoComplete="new-password"
-        />
+        <PasswordField name="password" control={control} label="رمز عبور" />
 
         <Button
           type="submit"
@@ -108,7 +90,7 @@ export default function SignupPageForm() {
           {isSubmitting ? (
             <CircularProgress size={22} color="inherit" />
           ) : (
-            "ساخت حساب کاربری"
+            "ورود"
           )}
         </Button>
       </Stack>
