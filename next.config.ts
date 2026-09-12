@@ -11,8 +11,13 @@ const nextConfig: NextConfig = {
         port: "5000",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "blogino-backend-production.up.railway.app",
+        port: "",
+        pathname: "/uploads/**",
+      },
     ],
-
     dangerouslyAllowLocalIP: true,
   },
 };
