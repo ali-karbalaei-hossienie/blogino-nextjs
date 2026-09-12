@@ -4,18 +4,19 @@ export default async function middlewareAuth(req: NextRequest) {
   const accessToken = req.cookies.get("accessToken")?.value;
   const refreshToken = req.cookies.get("refreshToken")?.value;
 
-  console.log("--- DEBUG MIDDLEWARE AUTH ---");
-  console.log("1. AccessToken:", accessToken ? "Exists" : "MISSING");
-  console.log("2. RefreshToken:", refreshToken ? "Exists" : "MISSING");
-
   if (!accessToken && !refreshToken) {
-    console.log("❌ Reason: No cookies found in request!");
     return null;
   }
 
   const cookies: string[] = [];
-  if (accessToken) cookies.push(`accessToken=${accessToken}`);
-  if (refreshToken) cookies.push(`refreshToken=${refreshToken}`);
+
+  if (accessToken) {
+    cookies.push(`accessToken=${accessToken}`);
+  }
+
+  if (refreshToken) {
+    cookies.push(`refreshToken=${refreshToken}`);
+  }
 
   const backendBaseUrl =
     process.env.INTERNAL_API_URL ||
@@ -24,7 +25,7 @@ export default async function middlewareAuth(req: NextRequest) {
       : "https://blogino-backend-production.up.railway.app/api");
 
   try {
-    const res = await fetch(`${backendBaseUrl}/user/profile`, {
+    const response = await fetch(`${backendBaseUrl}/user/profile`, {
       method: "GET",
       headers: {
         Cookie: cookies.join("; "),
@@ -32,24 +33,14 @@ export default async function middlewareAuth(req: NextRequest) {
       cache: "no-store",
     });
 
-    console.log("3. Backend Response Status:", res.status);
-
-    if (!res.ok) {
-      console.log("❌ Reason: Backend returned status", res.status);
+    if (!response.ok) {
       return null;
     }
 
-    const data = await res.json();
-    console.log("4. Backend Response Data:", JSON.stringify(data));
-
-    // بررسی ساختار داده برگشتی از بک‌اند
-    const user =
-      data?.data?.user || data?.user || (data?.data ? data.data : null);
-    console.log("5. Extracted User:", user ? "Found" : "NULL");
-
-    return user;
+    const result = await response.json();
+    return result?.data?.user ?? null;
   } catch (error) {
-    console.error("❌ Reason: Fetch Exception:", error);
+    console.error("Middleware authentication error:", error);
     return null;
   }
 }
