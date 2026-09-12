@@ -4,7 +4,12 @@ export default async function middlewareAuth(req: NextRequest) {
   const accessToken = req.cookies.get("accessToken")?.value;
   const refreshToken = req.cookies.get("refreshToken")?.value;
 
+  console.log("--- DEBUG MIDDLEWARE AUTH ---");
+  console.log("1. AccessToken:", accessToken ? "Exists" : "MISSING");
+  console.log("2. RefreshToken:", refreshToken ? "Exists" : "MISSING");
+
   if (!accessToken && !refreshToken) {
+    console.log("❌ Reason: No cookies found in request!");
     return null;
   }
 
@@ -27,14 +32,24 @@ export default async function middlewareAuth(req: NextRequest) {
       cache: "no-store",
     });
 
+    console.log("3. Backend Response Status:", res.status);
+
     if (!res.ok) {
+      console.log("❌ Reason: Backend returned status", res.status);
       return null;
     }
 
     const data = await res.json();
-    return data?.data?.user ?? null;
+    console.log("4. Backend Response Data:", JSON.stringify(data));
+
+    // بررسی ساختار داده برگشتی از بک‌اند
+    const user =
+      data?.data?.user || data?.user || (data?.data ? data.data : null);
+    console.log("5. Extracted User:", user ? "Found" : "NULL");
+
+    return user;
   } catch (error) {
-    console.error("Middleware fetch profile error:", error);
+    console.error("❌ Reason: Fetch Exception:", error);
     return null;
   }
 }
