@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const baseURL =
+  typeof window !== "undefined"
+    ? "/api"
+    : process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+
 const app = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL,
   withCredentials: true,
 });
 
